@@ -1,21 +1,204 @@
 {
   "domain": "emerging-sport-officiating",
-  "version": 1,
+  "version": 2,
   "sample_id": "record-017",
+  "as_of": "2026-09-26T09:20:00+08:00",
   "actors": [
-    "业务负责人",
-    "一线执行人员",
-    "审查人员"
+    "技术官员",
+    "场馆技术人员",
+    "安全认证官",
+    "医疗与救生人员"
   ],
   "facts": [
-    "新增项目采用差异显著的评分和比赛方式",
-    "虚拟跆拳道依赖头显与动作传感器",
-    "冲浪等项目包含主观评分并可能关联奥运资格"
+    "虚拟跆拳道依赖头显与动作追踪系统，按设备型号与漂移阈值验收",
+    "板式网球以玻璃墙和出界安全区为关键设施，逐块面板检查",
+    "冲浪面对实时海况，浪高、风速、周期按短周期复测",
+    "综合格斗涉及围绳、地垫、临场医生与救护车，缺一无开赛条件"
   ],
   "constraints": [
-    "项目设施标准",
-    "设备校准维护",
-    "场地安全认证",
-    "赛程影响传播"
+    "不得使用通用验收表，四个项目各有独立清单与标准版本",
+    "检查数据与照片必须带采集时间，换件或临时修复只影响对应设施",
+    "设备跨场借用、传感器漂移、玻璃损伤、海况突变、救护缺席立即传播到受影响赛程",
+    "旧证书不得放行，任何开赛、延迟或取消决定可回溯到标准、证据与签署人"
+  ],
+  "venues": [
+    {"id": "v-vta", "name": "虚拟跆拳道馆"},
+    {"id": "v-pad", "name": "板式网球中心"},
+    {"id": "v-bay", "name": "冲浪赛区"},
+    {"id": "v-mma", "name": "综合格斗馆"}
+  ],
+  "people": [
+    {"id": "td01", "name": "技术代表总裁", "role": "technical_delegate", "venue_scopes": []},
+    {"id": "td-vt", "name": "虚拟跆拳道技术官员", "role": "technical_delegate", "venue_scopes": ["v-vta"]},
+    {"id": "td-pa", "name": "板式网球技术官员", "role": "technical_delegate", "venue_scopes": ["v-pad"]},
+    {"id": "td-surf", "name": "冲浪技术官员", "role": "technical_delegate", "venue_scopes": ["v-bay"]},
+    {"id": "td-mm", "name": "格斗技术官员", "role": "technical_delegate", "venue_scopes": ["v-mma"]},
+    {"id": "cf01", "name": "安全认证官", "role": "certifier", "venue_scopes": []},
+    {"id": "st-vt", "name": "跆拳道馆设备技师", "role": "venue_staff", "venue_scopes": ["v-vta"]},
+    {"id": "st-pa", "name": "网球中心场地技师", "role": "venue_staff", "venue_scopes": ["v-pad"]},
+    {"id": "st-surf", "name": "赛区水域技师", "role": "venue_staff", "venue_scopes": ["v-bay"]},
+    {"id": "st-mm", "name": "格斗馆场地技师", "role": "venue_staff", "venue_scopes": ["v-mma"]},
+    {"id": "md-vt", "name": "跆拳道馆急救员", "role": "medic", "venue_scopes": ["v-vta"]},
+    {"id": "md-pa", "name": "网球中心急救员", "role": "medic", "venue_scopes": ["v-pad"]},
+    {"id": "md-surf", "name": "水边急救员", "role": "medic", "venue_scopes": ["v-bay"]},
+    {"id": "md-mma", "name": "MMA临场医生", "role": "medic", "venue_scopes": ["v-mma"]},
+    {"id": "md-mma2", "name": "MMA备班医生", "role": "medic", "venue_scopes": ["v-mma"]},
+    {"id": "lg-01", "name": "救生员甲", "role": "lifeguard", "venue_scopes": ["v-bay"]},
+    {"id": "lg-02", "name": "救生员乙", "role": "lifeguard", "venue_scopes": ["v-bay"]},
+    {"id": "lg-03", "name": "救生员丙", "role": "lifeguard", "venue_scopes": ["v-bay"]},
+    {"id": "lg-04", "name": "救生员丁", "role": "lifeguard", "venue_scopes": ["v-bay"]}
+  ],
+  "standards": [
+    {"id": "std-vt-r3", "discipline": "virtual_taekwondo", "version": "r3", "title": "虚拟跆拳道设备与场地认证标准", "effective_from": "2026-09-01T00:00:00+08:00", "effective_to": null},
+    {"id": "std-vt-r2", "discipline": "virtual_taekwondo", "version": "r2", "title": "虚拟跆拳道设备与场地认证标准（旧版）", "effective_from": "2026-06-01T00:00:00+08:00", "effective_to": "2026-08-31T23:59:59+08:00"},
+    {"id": "std-pa-r2", "discipline": "padel", "version": "r2", "title": "板式网球玻璃围护与安全区标准", "effective_from": "2026-08-01T00:00:00+08:00", "effective_to": null},
+    {"id": "std-surf-r1", "discipline": "surfing", "version": "r1", "title": "冲浪竞赛海况阈值与水域安保标准", "effective_from": "2026-09-10T00:00:00+08:00", "effective_to": null},
+    {"id": "std-mm-r2", "discipline": "mma", "version": "r2", "title": "综合格斗擂台与医疗保障标准", "effective_from": "2026-07-01T00:00:00+08:00", "effective_to": null}
+  ],
+  "equipment": [
+    {"id": "eq-hmd-01", "name": "一号头显", "model": "Varis XR-Pro v2", "venue_id": "v-vta", "mobile": false, "firmware": "3.4.2"},
+    {"id": "eq-hmd-02", "name": "二号头显", "model": "Varis XR-Pro v2", "venue_id": "v-vta", "mobile": false, "firmware": "3.4.2"},
+    {"id": "eq-hmd-03", "name": "跨场借用头显", "model": "Varis XR-Pro v2", "venue_id": "v-pad", "mobile": true, "firmware": "3.4.1", "note": "所有权属 v-vta，9月26日借调 v-pad 演示"},
+    {"id": "eq-hmd-04", "name": "备用头显", "model": "Varis XR-Pro v2", "venue_id": "v-vta", "mobile": false, "firmware": "3.4.2"},
+    {"id": "eq-trk-01", "name": "追踪器01", "model": "Varis Tracker G3", "venue_id": "v-vta", "mobile": false},
+    {"id": "eq-trk-02", "name": "追踪器02", "model": "Varis Tracker G3", "venue_id": "v-vta", "mobile": false},
+    {"id": "eq-trk-03", "name": "追踪器03", "model": "Varis Tracker G3", "venue_id": "v-vta", "mobile": false},
+    {"id": "eq-trk-04", "name": "追踪器04", "model": "Varis Tracker G3", "venue_id": "v-vta", "mobile": false},
+    {"id": "eq-trk-05", "name": "追踪器05", "model": "Varis Tracker G3", "venue_id": "v-vta", "mobile": false},
+    {"id": "eq-trk-06", "name": "追踪器06", "model": "Varis Tracker G3", "venue_id": "v-vta", "mobile": false},
+    {"id": "eq-trk-07", "name": "备用追踪器", "model": "Varis Tracker G3", "venue_id": "v-vta", "mobile": false},
+    {"id": "eq-jetski-1", "name": "救生艇一号", "model": "AquaRescue 160", "venue_id": "v-bay", "mobile": false},
+    {"id": "eq-jetski-2", "name": "救生艇二号", "model": "AquaRescue 160", "venue_id": "v-bay", "mobile": false},
+    {"id": "eq-amb-01", "name": "待命救护车", "model": "RescueVan Type-C", "venue_id": "v-mma", "mobile": true},
+    {"id": "eq-mma-kit", "name": "MMA医疗包", "model": "MedKit-Pro", "venue_id": "v-mma", "mobile": false}
+  ],
+  "facilities": [
+    {"id": "fac-vt-platform", "name": "虚拟跆拳道比赛平台", "venue_id": "v-vta", "spec": "10m×10m，周边净空2m", "components": []},
+    {"id": "fac-pa-court1", "name": "板式网球一号场", "venue_id": "v-pad", "spec": "20m×10m，玻璃围护，外侧安全区2m", "components": ["fac-pa-court1#pnl-n", "fac-pa-court1#pnl-e", "fac-pa-court1#pnl-s", "fac-pa-court1#pnl-w"]},
+    {"id": "fac-pa-court2", "name": "板式网球二号场", "venue_id": "v-pad", "spec": "20m×10m，玻璃围护，外侧安全区2m", "components": ["fac-pa-court2#pnl-n", "fac-pa-court2#pnl-e", "fac-pa-court2#pnl-s", "fac-pa-court2#pnl-w"]},
+    {"id": "fac-surf-breakA", "name": "冲浪A点水域", "venue_id": "v-bay", "spec": "礁石浪点，划定竞赛区与救生通道", "components": []},
+    {"id": "fac-mma-cage", "name": "MMA围笼", "venue_id": "v-mma", "spec": "直径9.8m围笼", "components": []},
+    {"id": "fac-mma-ropes", "name": "MMA围绳组件", "venue_id": "v-mma", "spec": "四道围绳，张力按STD-MM-R2", "components": []},
+    {"id": "fac-mma-mat", "name": "MMA地垫", "venue_id": "v-mma", "spec": "厚度5cm，外延覆盖1.2m", "components": []},
+    {"id": "fac-mma-medbay", "name": "MMA医疗区与救护车通道", "venue_id": "v-mma", "spec": "馆侧医疗区，通道直通停车区", "components": []}
+  ],
+  "checklists": [
+    {"id": "cl-vt-hmd", "discipline": "virtual_taekwondo", "kind": "equipment", "standard_id": "std-vt-r3", "targets": ["eq-hmd-01", "eq-hmd-02"], "cadence_hours": 168, "requirement": "头显为认证型号 Varis XR-Pro v2，固件不低于3.4.1", "alternatives": ["调用本馆备用头显 eq-hmd-04，先完成当馆校准与自检"]},
+    {"id": "cl-vt-trk", "discipline": "virtual_taekwondo", "kind": "calibration", "standard_id": "std-vt-r3", "targets": ["eq-trk-01", "eq-trk-02", "eq-trk-03", "eq-trk-04", "eq-trk-05", "eq-trk-06", "eq-trk-07"], "cadence_hours": 168, "requirement": "动作追踪器15分钟漂移不超过5mm；校准计划每7天一次", "alternatives": ["更换同型号已校准备机 eq-trk-07 并复核", "暂停受影响参赛位，顺延赛程"]},
+    {"id": "cl-vt-platform", "discipline": "virtual_taekwondo", "kind": "facility", "standard_id": "std-vt-r3", "targets": ["fac-vt-platform"], "cadence_hours": 24, "requirement": "比赛平台10m×10m，周边净空不小于2m", "alternatives": ["启用备用热身台并重新丈量"]},
+    {"id": "cl-vt-loan", "discipline": "virtual_taekwondo", "kind": "equipment", "standard_id": "std-vt-r3", "targets": ["eq-hmd-03"], "cadence_hours": 24, "requirement": "跨场借用头显须在当前场馆完成校准与开机自检", "alternatives": ["终止借用，改用本馆 eq-hmd-04", "演示场次改为录播"]},
+    {"id": "cl-vt-med", "discipline": "virtual_taekwondo", "kind": "medical", "standard_id": "std-vt-r3", "targets": ["md-vt"], "cadence_hours": 4, "requirement": "急救员1名在岗，AED在位可用", "alternatives": ["从邻馆调派急救员，15分钟内到岗"]},
+
+    {"id": "cl-pa-glass", "discipline": "padel", "kind": "facility", "standard_id": "std-pa-r2", "targets": ["fac-pa-court1#pnl-n", "fac-pa-court1#pnl-e", "fac-pa-court1#pnl-s", "fac-pa-court1#pnl-w", "fac-pa-court2#pnl-n", "fac-pa-court2#pnl-e", "fac-pa-court2#pnl-s", "fac-pa-court2#pnl-w"], "cadence_hours": 24, "requirement": "钢化/夹胶玻璃无裂纹、嵌固完好（EN 12150）", "alternatives": ["更换整块面板并对该面板复检", "受影响场次改至 fac-pa-court2", "禁止贴胶继续使用"]},
+    {"id": "cl-pa-zone", "discipline": "padel", "kind": "facility", "standard_id": "std-pa-r2", "targets": ["fac-pa-court1", "fac-pa-court2"], "cadence_hours": 24, "requirement": "出界安全区不小于2m且无障碍物", "alternatives": ["清空缓冲区后复测"]},
+    {"id": "cl-pa-size", "discipline": "padel", "kind": "facility", "standard_id": "std-pa-r2", "targets": ["fac-pa-court1", "fac-pa-court2"], "cadence_hours": 168, "requirement": "场地20m×10m，净高不小于6m", "alternatives": []},
+    {"id": "cl-pa-light", "discipline": "padel", "kind": "equipment", "standard_id": "std-pa-r2", "targets": ["fac-pa-court1", "fac-pa-court2"], "cadence_hours": 24, "requirement": "台面照度不低于300lx", "alternatives": ["启用备用照明回路后复测"]},
+    {"id": "cl-pa-med", "discipline": "padel", "kind": "medical", "standard_id": "std-pa-r2", "targets": ["md-pa"], "cadence_hours": 4, "requirement": "急救员1名在岗", "alternatives": ["调派邻馆急救员"]},
+
+    {"id": "cl-surf-site", "discipline": "surfing", "kind": "facility", "standard_id": "std-surf-r1", "targets": ["fac-surf-breakA"], "cadence_hours": 168, "requirement": "竞赛水域划定，救生艇航道畅通", "alternatives": ["启用备用浪点，须持单独有效证书并完成检查"]},
+    {"id": "cl-surf-wave", "discipline": "surfing", "kind": "environment", "standard_id": "std-surf-r1", "targets": [], "cadence_hours": 1, "requirement": "有效浪高1.0m至2.5m", "alternatives": ["等待下一个60分钟复测窗口", "转备用浪点（须先完成环境检查）"]},
+    {"id": "cl-surf-wind", "discipline": "surfing", "kind": "environment", "standard_id": "std-surf-r1", "targets": [], "cadence_hours": 1, "requirement": "风速不超过20kn，最近30分钟无雷电", "alternatives": ["等待下一个60分钟复测窗口"]},
+    {"id": "cl-surf-period", "discipline": "surfing", "kind": "environment", "standard_id": "std-surf-r1", "targets": [], "cadence_hours": 1, "requirement": "涌浪周期8s至18s", "alternatives": ["等待下一个60分钟复测窗口"]},
+    {"id": "cl-surf-rescue", "discipline": "surfing", "kind": "medical", "standard_id": "std-surf-r1", "targets": [], "cadence_hours": 4, "requirement": "救生艇2艘、救生员4名同时在岗", "alternatives": ["增派摩托艇并补足救生员后复评"]},
+    {"id": "cl-surf-med", "discipline": "surfing", "kind": "medical", "standard_id": "std-surf-r1", "targets": ["md-surf"], "cadence_hours": 4, "requirement": "水边急救站开放，陆地转运不超过15分钟", "alternatives": ["预启动陆地医院绿色通道"]},
+
+    {"id": "cl-mm-cage", "discipline": "mma", "kind": "facility", "standard_id": "std-mm-r2", "targets": ["fac-mma-cage"], "cadence_hours": 24, "requirement": "围笼结构与门锁完好", "alternatives": []},
+    {"id": "cl-mm-ropes", "discipline": "mma", "kind": "facility", "standard_id": "std-mm-r2", "targets": ["fac-mma-ropes"], "cadence_hours": 24, "requirement": "四道围绳间距与张力在标准区间", "alternatives": ["收紧或更换围绳后复检"]},
+    {"id": "cl-mm-mat", "discipline": "mma", "kind": "facility", "standard_id": "std-mm-r2", "targets": ["fac-mma-mat"], "cadence_hours": 24, "requirement": "地垫厚度不小于4cm，外延覆盖不小于1m", "alternatives": ["加铺认证备用垫并复检"]},
+    {"id": "cl-mm-doc", "discipline": "mma", "kind": "medical", "standard_id": "std-mm-r2", "targets": ["md-mma"], "cadence_hours": 4, "requirement": "持照临场医生全程在岗", "alternatives": ["备班医生 md-mma2 提前到岗并核验执照", "无医生不得开赛"]},
+    {"id": "cl-mm-amb", "discipline": "mma", "kind": "medical", "standard_id": "std-mm-r2", "targets": ["eq-amb-01"], "cadence_hours": 4, "requirement": "救护车1辆在场待命，离场通道畅通", "alternatives": ["调用场馆备用救护车"]},
+    {"id": "cl-mm-kit", "discipline": "mma", "kind": "equipment", "standard_id": "std-mm-r2", "targets": ["eq-mma-kit"], "cadence_hours": 4, "requirement": "医疗包与脊柱固定器具齐备", "alternatives": []}
+  ],
+  "inspections": [
+    {"id": "ins-hmd1", "item_id": "cl-vt-hmd", "target_ref": "eq-hmd-01", "measured_at": "2026-09-25T16:10:00+08:00", "measured_by": "st-vt", "verdict": "pass", "readings": [{"metric": "firmware", "value": "3.4.2", "unit": null, "limit": ">=3.4.1", "pass": true}], "photos": [{"id": "ph-hmd1-a", "captured_at": "2026-09-25T16:10:20+08:00", "sha256": "a17c9f0412de0001"}]},
+    {"id": "ins-hmd2", "item_id": "cl-vt-hmd", "target_ref": "eq-hmd-02", "measured_at": "2026-09-25T16:20:00+08:00", "measured_by": "st-vt", "verdict": "pass", "readings": [{"metric": "firmware", "value": "3.4.2", "unit": null, "limit": ">=3.4.1", "pass": true}], "photos": [{"id": "ph-hmd2-a", "captured_at": "2026-09-25T16:20:15+08:00", "sha256": "a17c9f0412de0002"}]},
+    {"id": "ins-trk01", "item_id": "cl-vt-trk", "target_ref": "eq-trk-01", "measured_at": "2026-09-24T09:05:00+08:00", "measured_by": "st-vt", "verdict": "pass", "readings": [{"metric": "drift_15m", "value": 2.1, "unit": "mm", "limit": "<=5", "pass": true}], "photos": [{"id": "ph-trk01-a", "captured_at": "2026-09-24T09:05:40+08:00", "sha256": "b201000000000001"}]},
+    {"id": "ins-trk02-ok", "item_id": "cl-vt-trk", "target_ref": "eq-trk-02", "measured_at": "2026-09-24T09:10:00+08:00", "measured_by": "st-vt", "verdict": "pass", "readings": [{"metric": "drift_15m", "value": 3.0, "unit": "mm", "limit": "<=5", "pass": true}], "photos": [{"id": "ph-trk02-a", "captured_at": "2026-09-24T09:10:30+08:00", "sha256": "b201000000000002"}]},
+    {"id": "ins-trk02-fail", "item_id": "cl-vt-trk", "target_ref": "eq-trk-02", "measured_at": "2026-09-26T07:30:00+08:00", "measured_by": "st-vt", "verdict": "fail", "readings": [{"metric": "drift_15m", "value": 8.4, "unit": "mm", "limit": "<=5", "pass": false}], "photos": [{"id": "ph-trk02-b1", "captured_at": "2026-09-26T07:30:10+08:00", "sha256": "b2010000000000f2"}, {"id": "ph-trk02-b2", "captured_at": "2026-09-26T07:30:55+08:00", "sha256": "b2010000000000f3"}]},
+    {"id": "ins-trk03", "item_id": "cl-vt-trk", "target_ref": "eq-trk-03", "measured_at": "2026-09-24T09:15:00+08:00", "measured_by": "st-vt", "verdict": "pass", "readings": [{"metric": "drift_15m", "value": 2.6, "unit": "mm", "limit": "<=5", "pass": true}], "photos": [{"id": "ph-trk03-a", "captured_at": "2026-09-24T09:15:30+08:00", "sha256": "b201000000000003"}]},
+    {"id": "ins-trk04", "item_id": "cl-vt-trk", "target_ref": "eq-trk-04", "measured_at": "2026-09-24T09:20:00+08:00", "measured_by": "st-vt", "verdict": "pass", "readings": [{"metric": "drift_15m", "value": 1.9, "unit": "mm", "limit": "<=5", "pass": true}], "photos": [{"id": "ph-trk04-a", "captured_at": "2026-09-24T09:20:30+08:00", "sha256": "b201000000000004"}]},
+    {"id": "ins-trk05", "item_id": "cl-vt-trk", "target_ref": "eq-trk-05", "measured_at": "2026-09-24T09:25:00+08:00", "measured_by": "st-vt", "verdict": "pass", "readings": [{"metric": "drift_15m", "value": 2.8, "unit": "mm", "limit": "<=5", "pass": true}], "photos": [{"id": "ph-trk05-a", "captured_at": "2026-09-24T09:25:30+08:00", "sha256": "b201000000000005"}]},
+    {"id": "ins-trk06", "item_id": "cl-vt-trk", "target_ref": "eq-trk-06", "measured_at": "2026-09-24T09:30:00+08:00", "measured_by": "st-vt", "verdict": "pass", "readings": [{"metric": "drift_15m", "value": 3.3, "unit": "mm", "limit": "<=5", "pass": true}], "photos": [{"id": "ph-trk06-a", "captured_at": "2026-09-24T09:30:30+08:00", "sha256": "b201000000000006"}]},
+    {"id": "ins-trk07", "item_id": "cl-vt-trk", "target_ref": "eq-trk-07", "measured_at": "2026-09-24T09:35:00+08:00", "measured_by": "st-vt", "verdict": "pass", "readings": [{"metric": "drift_15m", "value": 2.2, "unit": "mm", "limit": "<=5", "pass": true}], "photos": [{"id": "ph-trk07-a", "captured_at": "2026-09-24T09:35:30+08:00", "sha256": "b201000000000007"}]},
+    {"id": "ins-vt-platform", "item_id": "cl-vt-platform", "target_ref": "fac-vt-platform", "measured_at": "2026-09-25T15:00:00+08:00", "measured_by": "st-vt", "verdict": "pass", "readings": [{"metric": "clearance", "value": 2.1, "unit": "m", "limit": ">=2", "pass": true}], "photos": [{"id": "ph-vtp-a", "captured_at": "2026-09-25T15:00:45+08:00", "sha256": "c301000000000001"}]},
+    {"id": "ins-loan-vta", "item_id": "cl-vt-loan", "target_ref": "eq-hmd-03", "measured_at": "2026-09-25T17:00:00+08:00", "measured_by": "st-vt", "verdict": "pass", "readings": [{"metric": "self_test", "value": "ok", "unit": null, "limit": "ok", "pass": true}], "photos": [{"id": "ph-loan-a", "captured_at": "2026-09-25T17:00:20+08:00", "sha256": "d401000000000001"}]},
+    {"id": "ins-loan-pad", "item_id": "cl-vt-loan", "target_ref": "eq-hmd-03", "measured_at": "2026-09-26T09:10:00+08:00", "measured_by": "st-pa", "verdict": "fail", "readings": [{"metric": "display_self_test", "value": "flicker", "unit": null, "limit": "ok", "pass": false}], "photos": [{"id": "ph-loan-b1", "captured_at": "2026-09-26T09:10:10+08:00", "sha256": "d401000000000002"}, {"id": "ph-loan-b2", "captured_at": "2026-09-26T09:10:40+08:00", "sha256": "d401000000000003"}]},
+    {"id": "ins-md-vt", "item_id": "cl-vt-med", "target_ref": "md-vt", "measured_at": "2026-09-26T07:30:00+08:00", "measured_by": "td-vt", "verdict": "pass", "readings": [{"metric": "on_duty", "value": true, "unit": null, "limit": "true", "pass": true}, {"metric": "aed_present", "value": true, "unit": null, "limit": "true", "pass": true}], "photos": [{"id": "ph-mdvt-a", "captured_at": "2026-09-26T07:30:10+08:00", "sha256": "e501000000000001"}]},
+
+    {"id": "ins-pa-c1-n", "item_id": "cl-pa-glass", "target_ref": "fac-pa-court1#pnl-n", "measured_at": "2026-09-26T07:40:00+08:00", "measured_by": "st-pa", "verdict": "pass", "readings": [{"metric": "crack_length", "value": 0, "unit": "cm", "limit": "=0", "pass": true}], "photos": [{"id": "ph-c1n-a", "captured_at": "2026-09-26T07:40:20+08:00", "sha256": "f601000000000001"}]},
+    {"id": "ins-pa-c1-e", "item_id": "cl-pa-glass", "target_ref": "fac-pa-court1#pnl-e", "measured_at": "2026-09-26T07:42:00+08:00", "measured_by": "st-pa", "verdict": "pass", "readings": [{"metric": "crack_length", "value": 0, "unit": "cm", "limit": "=0", "pass": true}], "photos": [{"id": "ph-c1e-a", "captured_at": "2026-09-26T07:42:20+08:00", "sha256": "f601000000000002"}]},
+    {"id": "ins-pa-c1-s", "item_id": "cl-pa-glass", "target_ref": "fac-pa-court1#pnl-s", "measured_at": "2026-09-26T07:50:00+08:00", "measured_by": "st-pa", "verdict": "fail", "readings": [{"metric": "crack_length", "value": 12, "unit": "cm", "limit": "=0", "pass": false}], "photos": [{"id": "ph-c1s-a", "captured_at": "2026-09-26T07:50:05+08:00", "sha256": "f6010000000000f3"}, {"id": "ph-c1s-b", "captured_at": "2026-09-26T07:50:50+08:00", "sha256": "f6010000000000f4"}]},
+    {"id": "ins-pa-c1-w", "item_id": "cl-pa-glass", "target_ref": "fac-pa-court1#pnl-w", "measured_at": "2026-09-26T07:44:00+08:00", "measured_by": "st-pa", "verdict": "pass", "readings": [{"metric": "crack_length", "value": 0, "unit": "cm", "limit": "=0", "pass": true}], "photos": [{"id": "ph-c1w-a", "captured_at": "2026-09-26T07:44:20+08:00", "sha256": "f601000000000004"}]},
+    {"id": "ins-pa-c2-n", "item_id": "cl-pa-glass", "target_ref": "fac-pa-court2#pnl-n", "measured_at": "2026-09-26T07:41:00+08:00", "measured_by": "st-pa", "verdict": "pass", "readings": [{"metric": "crack_length", "value": 0, "unit": "cm", "limit": "=0", "pass": true}], "photos": [{"id": "ph-c2n-a", "captured_at": "2026-09-26T07:41:20+08:00", "sha256": "f602000000000001"}]},
+    {"id": "ins-pa-c2-e", "item_id": "cl-pa-glass", "target_ref": "fac-pa-court2#pnl-e", "measured_at": "2026-09-26T07:43:00+08:00", "measured_by": "st-pa", "verdict": "pass", "readings": [{"metric": "crack_length", "value": 0, "unit": "cm", "limit": "=0", "pass": true}], "photos": [{"id": "ph-c2e-a", "captured_at": "2026-09-26T07:43:20+08:00", "sha256": "f602000000000002"}]},
+    {"id": "ins-pa-c2-s", "item_id": "cl-pa-glass", "target_ref": "fac-pa-court2#pnl-s", "measured_at": "2026-09-26T07:45:00+08:00", "measured_by": "st-pa", "verdict": "pass", "readings": [{"metric": "crack_length", "value": 0, "unit": "cm", "limit": "=0", "pass": true}], "photos": [{"id": "ph-c2s-a", "captured_at": "2026-09-26T07:45:20+08:00", "sha256": "f602000000000003"}]},
+    {"id": "ins-pa-c2-w", "item_id": "cl-pa-glass", "target_ref": "fac-pa-court2#pnl-w", "measured_at": "2026-09-26T07:46:00+08:00", "measured_by": "st-pa", "verdict": "pass", "readings": [{"metric": "crack_length", "value": 0, "unit": "cm", "limit": "=0", "pass": true}], "photos": [{"id": "ph-c2w-a", "captured_at": "2026-09-26T07:46:20+08:00", "sha256": "f602000000000004"}]},
+    {"id": "ins-pa-zone1", "item_id": "cl-pa-zone", "target_ref": "fac-pa-court1", "measured_at": "2026-09-26T07:20:00+08:00", "measured_by": "st-pa", "verdict": "pass", "readings": [{"metric": "runoff_width", "value": 2.2, "unit": "m", "limit": ">=2", "pass": true}], "photos": [{"id": "ph-z1-a", "captured_at": "2026-09-26T07:20:30+08:00", "sha256": "f611000000000001"}]},
+    {"id": "ins-pa-zone2", "item_id": "cl-pa-zone", "target_ref": "fac-pa-court2", "measured_at": "2026-09-26T07:25:00+08:00", "measured_by": "st-pa", "verdict": "pass", "readings": [{"metric": "runoff_width", "value": 2.1, "unit": "m", "limit": ">=2", "pass": true}], "photos": [{"id": "ph-z2-a", "captured_at": "2026-09-26T07:25:30+08:00", "sha256": "f612000000000001"}]},
+    {"id": "ins-pa-size1", "item_id": "cl-pa-size", "target_ref": "fac-pa-court1", "measured_at": "2026-09-26T07:10:00+08:00", "measured_by": "st-pa", "verdict": "pass", "readings": [{"metric": "area", "value": 200, "unit": "m2", "limit": "=200", "pass": true}], "photos": [{"id": "ph-s1-a", "captured_at": "2026-09-26T07:10:40+08:00", "sha256": "f621000000000001"}]},
+    {"id": "ins-pa-size2", "item_id": "cl-pa-size", "target_ref": "fac-pa-court2", "measured_at": "2026-09-26T07:15:00+08:00", "measured_by": "st-pa", "verdict": "pass", "readings": [{"metric": "area", "value": 200, "unit": "m2", "limit": "=200", "pass": true}], "photos": [{"id": "ph-s2-a", "captured_at": "2026-09-26T07:15:40+08:00", "sha256": "f622000000000001"}]},
+    {"id": "ins-pa-light1", "item_id": "cl-pa-light", "target_ref": "fac-pa-court1", "measured_at": "2026-09-26T07:05:00+08:00", "measured_by": "st-pa", "verdict": "pass", "readings": [{"metric": "lux", "value": 360, "unit": "lx", "limit": ">=300", "pass": true}], "photos": [{"id": "ph-l1-a", "captured_at": "2026-09-26T07:05:20+08:00", "sha256": "f631000000000001"}]},
+    {"id": "ins-pa-light2", "item_id": "cl-pa-light", "target_ref": "fac-pa-court2", "measured_at": "2026-09-26T07:08:00+08:00", "measured_by": "st-pa", "verdict": "pass", "readings": [{"metric": "lux", "value": 350, "unit": "lx", "limit": ">=300", "pass": true}], "photos": [{"id": "ph-l2-a", "captured_at": "2026-09-26T07:08:20+08:00", "sha256": "f632000000000001"}]},
+    {"id": "ins-md-pa", "item_id": "cl-pa-med", "target_ref": "md-pa", "measured_at": "2026-09-26T07:35:00+08:00", "measured_by": "td-pa", "verdict": "pass", "readings": [{"metric": "on_duty", "value": true, "unit": null, "limit": "true", "pass": true}], "photos": [{"id": "ph-mdpa-a", "captured_at": "2026-09-26T07:35:10+08:00", "sha256": "e502000000000001"}]},
+
+    {"id": "ins-surf-site", "item_id": "cl-surf-site", "target_ref": "fac-surf-breakA", "measured_at": "2026-09-25T18:00:00+08:00", "measured_by": "st-surf", "verdict": "pass", "readings": [{"metric": "channel_clear", "value": true, "unit": null, "limit": "true", "pass": true}], "photos": [{"id": "ph-site-a", "captured_at": "2026-09-25T18:00:30+08:00", "sha256": "g701000000000001"}]},
+    {"id": "ins-wave-0700", "item_id": "cl-surf-wave", "target_ref": "@discipline", "measured_at": "2026-09-26T07:00:00+08:00", "measured_by": "st-surf", "verdict": "pass", "readings": [{"metric": "wave_height", "value": 1.6, "unit": "m", "limit": "1.0-2.5", "pass": true}], "photos": [{"id": "ph-wave-a", "captured_at": "2026-09-26T07:00:30+08:00", "sha256": "g711000000000001"}]},
+    {"id": "ins-wave-0900", "item_id": "cl-surf-wave", "target_ref": "@discipline", "measured_at": "2026-09-26T09:00:00+08:00", "measured_by": "st-surf", "verdict": "fail", "readings": [{"metric": "wave_height", "value": 3.1, "unit": "m", "limit": "1.0-2.5", "pass": false}], "photos": [{"id": "ph-wave-b1", "captured_at": "2026-09-26T09:00:15+08:00", "sha256": "g71100000000000f2"}, {"id": "ph-wave-b2", "captured_at": "2026-09-26T09:00:45+08:00", "sha256": "g71100000000000f3"}]},
+    {"id": "ins-wind-0705", "item_id": "cl-surf-wind", "target_ref": "@discipline", "measured_at": "2026-09-26T07:05:00+08:00", "measured_by": "st-surf", "verdict": "pass", "readings": [{"metric": "wind", "value": 14, "unit": "kn", "limit": "<=20", "pass": true}, {"metric": "lightning_30m", "value": false, "unit": null, "limit": "false", "pass": true}], "photos": [{"id": "ph-wind-a", "captured_at": "2026-09-26T07:05:20+08:00", "sha256": "g721000000000001"}]},
+    {"id": "ins-wind-0902", "item_id": "cl-surf-wind", "target_ref": "@discipline", "measured_at": "2026-09-26T09:02:00+08:00", "measured_by": "st-surf", "verdict": "fail", "readings": [{"metric": "wind", "value": 24, "unit": "kn", "limit": "<=20", "pass": false}, {"metric": "lightning_30m", "value": true, "unit": null, "limit": "false", "pass": false}], "photos": [{"id": "ph-wind-b1", "captured_at": "2026-09-26T09:02:10+08:00", "sha256": "g72100000000000f2"}]},
+    {"id": "ins-period-0710", "item_id": "cl-surf-period", "target_ref": "@discipline", "measured_at": "2026-09-26T07:10:00+08:00", "measured_by": "st-surf", "verdict": "pass", "readings": [{"metric": "period", "value": 12, "unit": "s", "limit": "8-18", "pass": true}], "photos": [{"id": "ph-period-a", "captured_at": "2026-09-26T07:10:20+08:00", "sha256": "g731000000000001"}]},
+    {"id": "ins-rescue", "item_id": "cl-surf-rescue", "target_ref": "@discipline", "measured_at": "2026-09-26T06:50:00+08:00", "measured_by": "st-surf", "verdict": "pass", "readings": [{"metric": "craft_ready", "value": 2, "unit": "艘", "limit": ">=2", "pass": true}, {"metric": "guards_on_duty", "value": 4, "unit": "人", "limit": ">=4", "pass": true}], "photos": [{"id": "ph-rescue-a", "captured_at": "2026-09-26T06:50:40+08:00", "sha256": "g741000000000001"}]},
+    {"id": "ins-md-surf", "item_id": "cl-surf-med", "target_ref": "md-surf", "measured_at": "2026-09-26T06:55:00+08:00", "measured_by": "td-surf", "verdict": "pass", "readings": [{"metric": "on_duty", "value": true, "unit": null, "limit": "true", "pass": true}, {"metric": "transfer_minutes", "value": 12, "unit": "min", "limit": "<=15", "pass": true}], "photos": [{"id": "ph-mdsurf-a", "captured_at": "2026-09-26T06:55:20+08:00", "sha256": "e503000000000001"}]},
+
+    {"id": "ins-mm-cage", "item_id": "cl-mm-cage", "target_ref": "fac-mma-cage", "measured_at": "2026-09-25T17:20:00+08:00", "measured_by": "st-mm", "verdict": "pass", "readings": [{"metric": "latch_ok", "value": true, "unit": null, "limit": "true", "pass": true}], "photos": [{"id": "ph-cage-a", "captured_at": "2026-09-25T17:20:30+08:00", "sha256": "h801000000000001"}]},
+    {"id": "ins-mm-ropes", "item_id": "cl-mm-ropes", "target_ref": "fac-mma-ropes", "measured_at": "2026-09-25T17:30:00+08:00", "measured_by": "st-mm", "verdict": "pass", "readings": [{"metric": "tension", "value": 45, "unit": "kgf", "limit": "40-50", "pass": true}], "photos": [{"id": "ph-ropes-a", "captured_at": "2026-09-25T17:30:30+08:00", "sha256": "h802000000000001"}]},
+    {"id": "ins-mm-mat-old", "item_id": "cl-mm-mat", "target_ref": "fac-mma-mat", "measured_at": "2026-09-23T09:50:00+08:00", "measured_by": "st-mm", "verdict": "fail", "readings": [{"metric": "wear", "value": true, "unit": null, "limit": "false", "pass": false}], "photos": [{"id": "ph-mat-old", "captured_at": "2026-09-23T09:50:20+08:00", "sha256": "h80300000000000f0"}]},
+    {"id": "ins-mm-mat", "item_id": "cl-mm-mat", "target_ref": "fac-mma-mat", "measured_at": "2026-09-25T17:40:00+08:00", "measured_by": "st-mm", "verdict": "pass", "readings": [{"metric": "thickness", "value": 5, "unit": "cm", "limit": ">=4", "pass": true}], "photos": [{"id": "ph-mat-a", "captured_at": "2026-09-25T17:40:30+08:00", "sha256": "h803000000000001"}]},
+    {"id": "ins-mm-doc", "item_id": "cl-mm-doc", "target_ref": "md-mma", "measured_at": "2026-09-26T08:30:00+08:00", "measured_by": "td-mm", "verdict": "fail", "readings": [{"metric": "on_duty", "value": false, "unit": null, "limit": "true", "pass": false}], "photos": [{"id": "ph-doc-a", "captured_at": "2026-09-26T08:30:10+08:00", "sha256": "h80400000000000f1"}]},
+    {"id": "ins-mm-amb", "item_id": "cl-mm-amb", "target_ref": "eq-amb-01", "measured_at": "2026-09-26T08:00:00+08:00", "measured_by": "st-mm", "verdict": "pass", "readings": [{"metric": "standby", "value": true, "unit": null, "limit": "true", "pass": true}, {"metric": "lane_clear", "value": true, "unit": null, "limit": "true", "pass": true}], "photos": [{"id": "ph-amb-a", "captured_at": "2026-09-26T08:00:30+08:00", "sha256": "h805000000000001"}]},
+    {"id": "ins-mm-kit", "item_id": "cl-mm-kit", "target_ref": "eq-mma-kit", "measured_at": "2026-09-26T08:05:00+08:00", "measured_by": "md-mma2", "verdict": "pass", "readings": [{"metric": "kit_complete", "value": true, "unit": null, "limit": "true", "pass": true}], "photos": [{"id": "ph-kit-a", "captured_at": "2026-09-26T08:05:20+08:00", "sha256": "h806000000000001"}]}
+  ],
+  "work_orders": [
+    {"id": "wo-trk02", "title": "追踪器02漂移超标重新校准", "scope_ref": "eq-trk-02", "assignee": "st-vt", "created_at": "2026-09-26T07:40:00+08:00", "status": "in_progress", "temporary_repair": false, "plan": "停用 eq-trk-02，按STD-VT-R3重新校准并跑满15分钟漂移测试", "resolution": null},
+    {"id": "wo-glass-s", "title": "一号场南面玻璃面板更换", "scope_ref": "fac-pa-court1#pnl-s", "assignee": "st-pa", "created_at": "2026-09-26T08:00:00+08:00", "status": "open", "temporary_repair": false, "plan": "整块更换同规格钢化面板，仅对该面板复检；贴胶不作为放行依据", "resolution": null},
+    {"id": "wo-loan", "title": "跨场借用头显画面闪烁检修", "scope_ref": "eq-hmd-03", "assignee": "st-pa", "created_at": "2026-09-26T09:15:00+08:00", "status": "in_progress", "temporary_repair": false, "plan": "现场更换显示模组并重新自检；未通过前不得用于 v-pad 演示或送回 v-vta", "resolution": null},
+    {"id": "wo-mat-hist", "title": "地垫局部更换（历史工单）", "scope_ref": "fac-mma-mat", "assignee": "st-mm", "created_at": "2026-09-23T10:00:00+08:00", "status": "closed", "temporary_repair": false, "plan": "更换磨损区域地垫并复检厚度与外延", "resolution": {"inspection_id": "ins-mm-mat", "permanent": true}}
+  ],
+  "certificates": [
+    {"id": "cert-vt-1", "standard_id": "std-vt-r2", "status": "superseded", "scope_discipline": "virtual_taekwondo", "scope_refs": [], "issued_at": "2026-06-01T09:00:00+08:00", "valid_from": "2026-06-01T09:00:00+08:00", "valid_to": "2026-08-31T23:59:59+08:00", "issued_by": "cf01", "superseded_by": "cert-vt-2", "suspended_at": null, "reason": null},
+    {"id": "cert-vt-2", "standard_id": "std-vt-r3", "status": "active", "scope_discipline": "virtual_taekwondo", "scope_refs": [], "issued_at": "2026-09-02T09:00:00+08:00", "valid_from": "2026-09-02T09:00:00+08:00", "valid_to": "2026-10-02T23:59:59+08:00", "issued_by": "cf01", "superseded_by": null, "suspended_at": null, "reason": null},
+    {"id": "cert-pa-1", "standard_id": "std-pa-r2", "status": "suspended", "scope_discipline": "padel", "scope_refs": ["fac-pa-court1"], "issued_at": "2026-08-05T09:00:00+08:00", "valid_from": "2026-08-05T09:00:00+08:00", "valid_to": "2026-10-01T23:59:59+08:00", "issued_by": "cf01", "superseded_by": null, "suspended_at": "2026-09-26T08:05:00+08:00", "reason": "fac-pa-court1 南面玻璃12cm裂纹，更换复检前暂停效力"},
+    {"id": "cert-pa-2", "standard_id": "std-pa-r2", "status": "active", "scope_discipline": "padel", "scope_refs": ["fac-pa-court2"], "issued_at": "2026-08-05T09:30:00+08:00", "valid_from": "2026-08-05T09:30:00+08:00", "valid_to": "2026-10-01T23:59:59+08:00", "issued_by": "cf01", "superseded_by": null, "suspended_at": null, "reason": null},
+    {"id": "cert-surf-1", "standard_id": "std-surf-r1", "status": "active", "scope_discipline": "surfing", "scope_refs": ["fac-surf-breakA"], "issued_at": "2026-09-12T09:00:00+08:00", "valid_from": "2026-09-12T09:00:00+08:00", "valid_to": "2026-09-30T23:59:59+08:00", "issued_by": "cf01", "superseded_by": null, "suspended_at": null, "reason": null},
+    {"id": "cert-mm-1", "standard_id": "std-mm-r2", "status": "active", "scope_discipline": "mma", "scope_refs": [], "issued_at": "2026-08-01T09:00:00+08:00", "valid_from": "2026-08-01T09:00:00+08:00", "valid_to": "2026-10-15T23:59:59+08:00", "issued_by": "cf01", "superseded_by": null, "suspended_at": null, "reason": null}
+  ],
+  "events": [
+    {"id": "evt-drift", "title": "追踪器02传感器漂移超标", "resource_ref": "eq-trk-02", "blocks_refs": ["eq-trk-02"], "detected_at": "2026-09-26T07:35:00+08:00", "source_inspection": "ins-trk02-fail", "status": "open", "affected_sessions": ["sess-vt-01", "sess-vt-02"], "resolution": null},
+    {"id": "evt-glass", "title": "一号场南面玻璃裂纹", "resource_ref": "fac-pa-court1#pnl-s", "blocks_refs": ["fac-pa-court1", "fac-pa-court1#pnl-n", "fac-pa-court1#pnl-e", "fac-pa-court1#pnl-s", "fac-pa-court1#pnl-w"], "detected_at": "2026-09-26T07:55:00+08:00", "source_inspection": "ins-pa-c1-s", "status": "open", "affected_sessions": ["sess-pa-01", "sess-pa-03"], "resolution": null},
+    {"id": "evt-loan", "title": "跨场借用头显在 v-pad 自检失败", "resource_ref": "eq-hmd-03", "blocks_refs": ["eq-hmd-03"], "detected_at": "2026-09-26T09:10:00+08:00", "source_inspection": "ins-loan-pad", "status": "open", "affected_sessions": ["sess-pa-demo", "sess-vt-02"], "resolution": null},
+    {"id": "evt-sea", "title": "海况突变：浪高风速双超阈值并出现雷电", "resource_ref": "fac-surf-breakA", "blocks_refs": ["fac-surf-breakA"], "detected_at": "2026-09-26T09:05:00+08:00", "source_inspection": "ins-wave-0900", "status": "open", "affected_sessions": ["sess-surf-01", "sess-surf-02"], "resolution": null},
+    {"id": "evt-med", "title": "MMA临场医生缺席", "resource_ref": "md-mma", "blocks_refs": ["md-mma"], "detected_at": "2026-09-26T08:35:00+08:00", "source_inspection": "ins-mm-doc", "status": "open", "affected_sessions": ["sess-mma-01", "sess-mma-02"], "resolution": null},
+    {"id": "evt-mat-hist", "title": "地垫磨损（历史事件，已永久修复）", "resource_ref": "fac-mma-mat", "blocks_refs": ["fac-mma-mat"], "detected_at": "2026-09-23T09:50:00+08:00", "source_inspection": "ins-mm-mat-old", "status": "closed", "affected_sessions": [], "resolution": {"work_order_id": "wo-mat-hist", "inspection_id": "ins-mm-mat", "permanent": true, "resolved_at": "2026-09-23T12:10:00+08:00"}}
+  ],
+  "schedule": [
+    {"id": "sess-vt-01", "discipline": "virtual_taekwondo", "venue_id": "v-vta", "label": "虚拟跆拳道预赛第1场", "starts_at": "2026-09-26T09:00:00+08:00", "requires": ["fac-vt-platform", "eq-hmd-01", "eq-hmd-02", "eq-trk-01", "eq-trk-02", "eq-trk-03", "eq-trk-04", "eq-trk-05", "eq-trk-06", "md-vt"], "decision_id": "dec-vt-01"},
+    {"id": "sess-vt-02", "discipline": "virtual_taekwondo", "venue_id": "v-vta", "label": "虚拟跆拳道预赛第2场", "starts_at": "2026-09-26T14:00:00+08:00", "requires": ["fac-vt-platform", "eq-hmd-01", "eq-hmd-02", "eq-hmd-03", "eq-trk-01", "eq-trk-02", "eq-trk-03", "eq-trk-04", "eq-trk-05", "eq-trk-06", "md-vt"], "decision_id": null},
+    {"id": "sess-pa-01", "discipline": "padel", "venue_id": "v-pad", "label": "板式网球小组赛第1场（一号场）", "starts_at": "2026-09-26T09:30:00+08:00", "requires": ["fac-pa-court1", "fac-pa-court1#pnl-n", "fac-pa-court1#pnl-e", "fac-pa-court1#pnl-s", "fac-pa-court1#pnl-w", "md-pa"], "decision_id": "dec-pa-01"},
+    {"id": "sess-pa-02", "discipline": "padel", "venue_id": "v-pad", "label": "板式网球小组赛第2场（二号场）", "starts_at": "2026-09-26T11:00:00+08:00", "requires": ["fac-pa-court2", "fac-pa-court2#pnl-n", "fac-pa-court2#pnl-e", "fac-pa-court2#pnl-s", "fac-pa-court2#pnl-w", "md-pa"], "decision_id": "dec-pa-02"},
+    {"id": "sess-pa-03", "discipline": "padel", "venue_id": "v-pad", "label": "板式网球小组赛第3场（一号场）", "starts_at": "2026-09-26T15:00:00+08:00", "requires": ["fac-pa-court1", "fac-pa-court1#pnl-n", "fac-pa-court1#pnl-e", "fac-pa-court1#pnl-s", "fac-pa-court1#pnl-w", "md-pa"], "decision_id": null},
+    {"id": "sess-pa-demo", "discipline": "padel", "venue_id": "v-pad", "label": "跨项目VR体验演示（借用头显）", "starts_at": "2026-09-26T10:00:00+08:00", "requires": ["eq-hmd-03", "md-pa"], "decision_id": "dec-pa-demo"},
+    {"id": "sess-surf-01", "discipline": "surfing", "venue_id": "v-bay", "label": "冲浪首轮第1组", "starts_at": "2026-09-26T09:30:00+08:00", "requires": ["fac-surf-breakA", "eq-jetski-1", "eq-jetski-2", "lg-01", "lg-02", "lg-03", "lg-04", "md-surf"], "decision_id": "dec-surf-01"},
+    {"id": "sess-surf-02", "discipline": "surfing", "venue_id": "v-bay", "label": "冲浪首轮第2组", "starts_at": "2026-09-26T11:00:00+08:00", "requires": ["fac-surf-breakA", "eq-jetski-1", "eq-jetski-2", "lg-01", "lg-02", "lg-03", "lg-04", "md-surf"], "decision_id": "dec-surf-02"},
+    {"id": "sess-mma-01", "discipline": "mma", "venue_id": "v-mma", "label": "MMA预赛第1场", "starts_at": "2026-09-26T10:30:00+08:00", "requires": ["fac-mma-cage", "fac-mma-ropes", "fac-mma-mat", "eq-amb-01", "eq-mma-kit", "md-mma"], "decision_id": "dec-mm-01"},
+    {"id": "sess-mma-02", "discipline": "mma", "venue_id": "v-mma", "label": "MMA预赛第2场", "starts_at": "2026-09-26T13:30:00+08:00", "requires": ["fac-mma-cage", "fac-mma-ropes", "fac-mma-mat", "eq-amb-01", "eq-mma-kit", "md-mma"], "decision_id": null}
+  ],
+  "decisions": [
+    {"id": "dec-vt-01", "session_id": "sess-vt-01", "outcome": "delayed", "decided_at": "2026-09-26T08:00:00+08:00", "signed_by": "td-vt", "standard_id": "std-vt-r3", "certificate_id": "cert-vt-2", "evidence_inspection_ids": ["ins-trk02-fail", "ins-trk01"], "event_ids": ["evt-drift"], "alternative": "10:00前更换为已校准备机 eq-trk-07 并复核后开赛，否则整体顺延；不接受漂移中的追踪器", "note": "逐项缺口：cl-vt-trk/eq-trk-02 不合格"},
+    {"id": "dec-pa-01", "session_id": "sess-pa-01", "outcome": "delayed", "decided_at": "2026-09-26T08:10:00+08:00", "signed_by": "td-pa", "standard_id": "std-pa-r2", "certificate_id": "cert-pa-1", "evidence_inspection_ids": ["ins-pa-c1-s"], "event_ids": ["evt-glass"], "alternative": "面板整块更换复检前一号场停用；该场调整至 fac-pa-court2 12:30后空档", "note": "cert-pa-1 已于08:05暂停效力，二号场证书 cert-pa-2 不受影响"},
+    {"id": "dec-pa-02", "session_id": "sess-pa-02", "outcome": "go", "decided_at": "2026-09-26T09:05:00+08:00", "signed_by": "td-pa", "standard_id": "std-pa-r2", "certificate_id": "cert-pa-2", "evidence_inspection_ids": ["ins-pa-c2-n", "ins-pa-c2-e", "ins-pa-c2-s", "ins-pa-c2-w", "ins-pa-zone2", "ins-pa-size2", "ins-pa-light2", "ins-md-pa"], "event_ids": [], "alternative": null, "note": "二号场逐项合格，无未解除事件，按11:00开赛"},
+    {"id": "dec-pa-demo", "session_id": "sess-pa-demo", "outcome": "delayed", "decided_at": "2026-09-26T09:15:00+08:00", "signed_by": "td-pa", "standard_id": "std-vt-r3", "certificate_id": null, "evidence_inspection_ids": ["ins-loan-pad", "ins-md-pa"], "event_ids": ["evt-loan"], "alternative": "演示改为录播，或等待 eq-hmd-03 修复后重新自检", "note": "借用设备在借入场馆发生故障，按 cl-vt-loan 处理，v-vta 下午场次一并受影响"},
+    {"id": "dec-surf-01", "session_id": "sess-surf-01", "outcome": "delayed", "decided_at": "2026-09-26T09:12:00+08:00", "signed_by": "td-surf", "standard_id": "std-surf-r1", "certificate_id": "cert-surf-1", "evidence_inspection_ids": ["ins-wave-0900", "ins-wind-0902", "ins-period-0710"], "event_ids": ["evt-sea"], "alternative": "等待12:00复测窗口；浪高、风速、周期全部回到阈值且雷电解除后再评估", "note": "cl-surf-period 最近一次复测为07:10，已超出60分钟周期，同样列为缺口"},
+    {"id": "dec-surf-02", "session_id": "sess-surf-02", "outcome": "cancelled", "decided_at": "2026-09-26T09:18:00+08:00", "signed_by": "td-surf", "standard_id": "std-surf-r1", "certificate_id": "cert-surf-1", "evidence_inspection_ids": ["ins-wave-0900", "ins-wind-0902"], "event_ids": ["evt-sea"], "alternative": "顺延至下一竞赛日，按备用浪点评估重新编排", "note": "预报11:00前后浪高3.4m并伴有雷暴，当日窗口关闭"},
+    {"id": "dec-mm-01", "session_id": "sess-mma-01", "outcome": "delayed", "decided_at": "2026-09-26T08:40:00+08:00", "signed_by": "td-mm", "standard_id": "std-mm-r2", "certificate_id": "cert-mm-1", "evidence_inspection_ids": ["ins-mm-doc", "ins-mm-amb"], "event_ids": ["evt-med"], "alternative": "备班医生 md-mma2 提前到岗并完成执照核验后开赛；无临场医生不得开赛", "note": "围笼、围绳、地垫、救护车与医疗包均合格，唯一缺口为临场医生"}
   ]
 }

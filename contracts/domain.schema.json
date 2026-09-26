@@ -1,49 +1,325 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "新兴项目设备场地认证共享资料",
+  "description": "四个新兴项目（虚拟跆拳道、板式网球、冲浪、综合格斗）设备/场地/环境/医疗认证、工单、事件传播与开赛决策的共享资料结构。引用完整性与业务规则由读取模块执行。",
   "type": "object",
   "required": [
     "domain",
     "version",
     "sample_id",
+    "as_of",
     "actors",
     "facts",
-    "constraints"
+    "constraints",
+    "venues",
+    "people",
+    "standards",
+    "equipment",
+    "facilities",
+    "checklists",
+    "inspections",
+    "work_orders",
+    "certificates",
+    "events",
+    "schedule",
+    "decisions"
   ],
+  "additionalProperties": false,
   "properties": {
-    "domain": {
-      "type": "string",
-      "minLength": 1
-    },
-    "version": {
-      "type": "integer",
-      "minimum": 1
-    },
-    "sample_id": {
-      "type": "string",
-      "minLength": 1
-    },
-    "actors": {
+    "domain": {"type": "string", "minLength": 1},
+    "version": {"type": "integer", "minimum": 2},
+    "sample_id": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date-time", "description": "资料快照时刻，所有放行判断均相对该时刻"},
+    "actors": {"type": "array", "minItems": 2, "items": {"type": "string"}},
+    "facts": {"type": "array", "minItems": 2, "items": {"type": "string"}},
+    "constraints": {"type": "array", "minItems": 2, "items": {"type": "string"}},
+
+    "venues": {
       "type": "array",
-      "minItems": 2,
+      "minItems": 4,
       "items": {
-        "type": "string"
+        "type": "object",
+        "required": ["id", "name"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^v-"},
+          "name": {"type": "string", "minLength": 1}
+        }
       }
     },
-    "facts": {
+
+    "people": {
       "type": "array",
-      "minItems": 2,
       "items": {
-        "type": "string"
+        "type": "object",
+        "required": ["id", "name", "role", "venue_scopes"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "name": {"type": "string", "minLength": 1},
+          "role": {"enum": ["technical_delegate", "certifier", "venue_staff", "medic", "lifeguard"]},
+          "venue_scopes": {"type": "array", "items": {"type": "string"}},
+          "note": {"type": "string"}
+        }
       }
     },
-    "constraints": {
+
+    "standards": {
       "type": "array",
-      "minItems": 2,
+      "description": "按项目分别发布、按时间窗生效的标准版本。每个项目在 as_of 时刻恰有一个生效版本。",
       "items": {
-        "type": "string"
+        "type": "object",
+        "required": ["id", "discipline", "version", "title", "effective_from", "effective_to"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string"},
+          "discipline": {"enum": ["virtual_taekwondo", "padel", "surfing", "mma"]},
+          "version": {"type": "string"},
+          "title": {"type": "string"},
+          "effective_from": {"type": "string", "format": "date-time"},
+          "effective_to": {"type": ["string", "null"], "format": "date-time"}
+        }
+      }
+    },
+
+    "equipment": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "model", "venue_id", "mobile"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^eq-"},
+          "name": {"type": "string"},
+          "model": {"type": "string", "description": "设备型号"},
+          "venue_id": {"type": "string", "description": "当前所在场馆；mobile=true 时表示借用目的地"},
+          "mobile": {"type": "boolean", "description": "是否为可跨场借用的移动设备"},
+          "firmware": {"type": "string"},
+          "note": {"type": "string"}
+        }
+      }
+    },
+
+    "facilities": {
+      "type": "array",
+      "description": "场地/设施。components 列出可独立检查、独立换件的子部件（如逐块玻璃面板，引用格式 facility#component）。",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "venue_id", "spec", "components"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^fac-"},
+          "name": {"type": "string"},
+          "venue_id": {"type": "string"},
+          "spec": {"type": "string", "description": "场地尺寸/规格说明"},
+          "components": {"type": "array", "items": {"type": "string"}},
+          "note": {"type": "string"}
+        }
+      }
+    },
+
+    "checklists": {
+      "type": "array",
+      "description": "每个项目独立的验收清单条目；禁止跨项目复用通用表。targets 为空表示项目级环境条目（target_ref 用 @discipline）。",
+      "items": {
+        "type": "object",
+        "required": ["id", "discipline", "kind", "standard_id", "targets", "cadence_hours", "requirement", "alternatives"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^cl-"},
+          "discipline": {"enum": ["virtual_taekwondo", "padel", "surfing", "mma"]},
+          "kind": {"enum": ["equipment", "calibration", "facility", "environment", "medical"]},
+          "standard_id": {"type": "string"},
+          "targets": {"type": "array", "items": {"type": "string"}},
+          "cadence_hours": {"type": "number", "exclusiveMinimum": 0, "description": "复测/校准周期（小时），环境条目为短周期复测"},
+          "requirement": {"type": "string"},
+          "alternatives": {"type": "array", "items": {"type": "string"}, "description": "不合格时的替代方案"}
+        }
+      }
+    },
+
+    "inspections": {
+      "type": "array",
+      "description": "检查数据与照片，均必须带采集时间；照片以 sha256 摘要引用，不存真实影像。",
+      "items": {
+        "type": "object",
+        "required": ["id", "item_id", "target_ref", "measured_at", "measured_by", "verdict", "readings", "photos"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^ins-"},
+          "item_id": {"type": "string", "description": "对应 checklists.id"},
+          "target_ref": {"type": "string", "description": "设备/设施/子部件/人员引用；项目级条目用 @discipline"},
+          "measured_at": {"type": "string", "format": "date-time"},
+          "measured_by": {"type": "string", "description": "people.id"},
+          "verdict": {"enum": ["pass", "fail"]},
+          "readings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["metric", "value", "unit", "limit", "pass"],
+              "additionalProperties": false,
+              "properties": {
+                "metric": {"type": "string"},
+                "value": {},
+                "unit": {"type": ["string", "null"]},
+                "limit": {"type": "string"},
+                "pass": {"type": "boolean"}
+              }
+            }
+          },
+          "photos": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["id", "captured_at", "sha256"],
+              "additionalProperties": false,
+              "properties": {
+                "id": {"type": "string"},
+                "captured_at": {"type": "string", "format": "date-time"},
+                "sha256": {"type": "string", "minLength": 16}
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "work_orders": {
+      "type": "array",
+      "description": "维护工单只作用于 scope_ref 对应的单一设施/设备；临时修复或换件不得扩散到其他设施的合格状态。",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "scope_ref", "assignee", "created_at", "status", "temporary_repair", "plan", "resolution"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^wo-"},
+          "title": {"type": "string"},
+          "scope_ref": {"type": "string"},
+          "assignee": {"type": "string", "description": "people.id，必须为场馆技术人员且在场馆作用域内"},
+          "created_at": {"type": "string", "format": "date-time"},
+          "status": {"enum": ["open", "in_progress", "closed"]},
+          "temporary_repair": {"type": "boolean"},
+          "plan": {"type": "string"},
+          "resolution": {
+            "anyOf": [
+              {"type": "null"},
+              {
+                "type": "object",
+                "required": ["inspection_id", "permanent"],
+                "additionalProperties": false,
+                "properties": {
+                  "inspection_id": {"type": "string"},
+                  "permanent": {"type": "boolean", "description": "永久修复（换件等）才可恢复放行；临时修复不构成放行依据"},
+                  "closed_at": {"type": "string", "format": "date-time"}
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+
+    "certificates": {
+      "type": "array",
+      "description": "认证结论。旧版本证书 superseded，受损设施证书 suspended；非 active 或时间窗外的证书不得放行。",
+      "items": {
+        "type": "object",
+        "required": ["id", "standard_id", "status", "scope_discipline", "scope_refs", "issued_at", "valid_from", "valid_to", "issued_by", "superseded_by", "suspended_at", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^cert-"},
+          "standard_id": {"type": "string"},
+          "status": {"enum": ["active", "suspended", "superseded", "expired", "revoked"]},
+          "scope_discipline": {"enum": ["virtual_taekwondo", "padel", "surfing", "mma"]},
+          "scope_refs": {"type": "array", "items": {"type": "string"}, "description": "为空表示项目级整体证书；非空时仅覆盖列出的设施"},
+          "issued_at": {"type": "string", "format": "date-time"},
+          "valid_from": {"type": "string", "format": "date-time"},
+          "valid_to": {"type": "string", "format": "date-time"},
+          "issued_by": {"type": "string"},
+          "superseded_by": {"type": ["string", "null"]},
+          "suspended_at": {"type": ["string", "null"], "format": "date-time"},
+          "reason": {"type": ["string", "null"]}
+        }
+      }
+    },
+
+    "events": {
+      "type": "array",
+      "description": "突发事件。blocks_refs 为被阻断的资源（含父设施），affected_sessions 必须覆盖所有依赖被阻断资源的赛程，实现立即传播。",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "resource_ref", "blocks_refs", "detected_at", "source_inspection", "status", "affected_sessions", "resolution"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^evt-"},
+          "title": {"type": "string"},
+          "resource_ref": {"type": "string"},
+          "blocks_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "detected_at": {"type": "string", "format": "date-time"},
+          "source_inspection": {"type": "string"},
+          "status": {"enum": ["open", "closed"]},
+          "affected_sessions": {"type": "array", "items": {"type": "string"}},
+          "resolution": {
+            "anyOf": [
+              {"type": "null"},
+              {
+                "type": "object",
+                "required": ["work_order_id", "inspection_id", "permanent", "resolved_at"],
+                "additionalProperties": false,
+                "properties": {
+                  "work_order_id": {"type": "string"},
+                  "inspection_id": {"type": "string"},
+                  "permanent": {"type": "boolean"},
+                  "resolved_at": {"type": "string", "format": "date-time"}
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+
+    "schedule": {
+      "type": "array",
+      "description": "赛程。requires 列出开赛所需全部资源（含玻璃面板等子部件与医疗人员/设备）。",
+      "items": {
+        "type": "object",
+        "required": ["id", "discipline", "venue_id", "label", "starts_at", "requires", "decision_id"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^sess-"},
+          "discipline": {"enum": ["virtual_taekwondo", "padel", "surfing", "mma"]},
+          "venue_id": {"type": "string"},
+          "label": {"type": "string"},
+          "starts_at": {"type": "string", "format": "date-time"},
+          "requires": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "decision_id": {"type": ["string", "null"]}
+        }
+      }
+    },
+
+    "decisions": {
+      "type": "array",
+      "description": "开赛/延迟/取消决定，锚定当时有效标准版本、有效证书、检查证据与签署人，保证可追溯。",
+      "items": {
+        "type": "object",
+        "required": ["id", "session_id", "outcome", "decided_at", "signed_by", "standard_id", "certificate_id", "evidence_inspection_ids", "event_ids", "alternative", "note"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^dec-"},
+          "session_id": {"type": "string"},
+          "outcome": {"enum": ["go", "delayed", "cancelled"]},
+          "decided_at": {"type": "string", "format": "date-time"},
+          "signed_by": {"type": "string", "description": "people.id，须为技术官员"},
+          "standard_id": {"type": "string"},
+          "certificate_id": {"type": ["string", "null"]},
+          "evidence_inspection_ids": {"type": "array", "items": {"type": "string"}},
+          "event_ids": {"type": "array", "items": {"type": "string"}},
+          "alternative": {"type": ["string", "null"]},
+          "note": {"type": "string"}
+        }
       }
     }
-  },
-  "additionalProperties": false
+  }
 }
