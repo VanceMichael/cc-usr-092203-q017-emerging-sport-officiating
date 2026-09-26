@@ -8,7 +8,13 @@
     "sample_id",
     "actors",
     "facts",
-    "constraints"
+    "constraints",
+    "sports",
+    "inspections",
+    "work_orders",
+    "incidents",
+    "certifications",
+    "decisions"
   ],
   "properties": {
     "domain": {
@@ -42,6 +48,172 @@
       "minItems": 2,
       "items": {
         "type": "string"
+      }
+    },
+    "sports": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "sport_id",
+          "name",
+          "equipment",
+          "venue",
+          "safety_standards",
+          "environmental_thresholds",
+          "medical_resources"
+        ],
+        "properties": {
+          "sport_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "equipment": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["item", "model", "calibration_plan"],
+              "properties": {
+                "item": {"type": "string", "minLength": 1},
+                "model": {"type": "string", "minLength": 1},
+                "calibration_plan": {"type": "string", "minLength": 1},
+                "shared_across_venues": {"type": "boolean"}
+              },
+              "additionalProperties": false
+            }
+          },
+          "venue": {
+            "type": "object",
+            "required": ["dimensions", "safety_features"],
+            "properties": {
+              "dimensions": {"type": "string", "minLength": 1},
+              "safety_features": {
+                "type": "array",
+                "minItems": 1,
+                "items": {"type": "string"}
+              }
+            },
+            "additionalProperties": false
+          },
+          "safety_standards": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string"}
+          },
+          "environmental_thresholds": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "medical_resources": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string"}
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "inspections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["inspection_id", "sport_id", "target", "collected_at", "photos", "result"],
+        "properties": {
+          "inspection_id": {"type": "string", "minLength": 1},
+          "sport_id": {"type": "string", "minLength": 1},
+          "target": {"type": "string", "minLength": 1},
+          "collected_at": {"type": "string", "format": "date-time"},
+          "photos": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "result": {"type": "string", "enum": ["合格", "不合格", "待复核"]}
+        },
+        "additionalProperties": false
+      }
+    },
+    "work_orders": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["order_id", "sport_id", "facility", "type", "scope", "status", "assignee_role"],
+        "properties": {
+          "order_id": {"type": "string", "minLength": 1},
+          "sport_id": {"type": "string", "minLength": 1},
+          "facility": {"type": "string", "minLength": 1},
+          "type": {"type": "string", "enum": ["换件", "临时修复", "例行维护", "校准"]},
+          "scope": {"type": "string", "minLength": 1},
+          "status": {"type": "string", "enum": ["待处理", "处理中", "已关闭"]},
+          "assignee_role": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "incidents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["incident_id", "kind", "sport_id", "affects_schedules", "propagated"],
+        "properties": {
+          "incident_id": {"type": "string", "minLength": 1},
+          "kind": {
+            "type": "string",
+            "enum": ["传感器漂移", "玻璃损伤", "海况突变", "救护人员缺席", "设备跨场借用"]
+          },
+          "sport_id": {"type": "string", "minLength": 1},
+          "affects_schedules": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "propagated": {"type": "boolean"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "certifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["cert_id", "sport_id", "subject", "standard_version", "conclusion", "valid_until", "signer"],
+        "properties": {
+          "cert_id": {"type": "string", "minLength": 1},
+          "sport_id": {"type": "string", "minLength": 1},
+          "subject": {"type": "string", "minLength": 1},
+          "standard_version": {"type": "string", "minLength": 1},
+          "conclusion": {"type": "string", "enum": ["通过", "有条件通过", "不通过"]},
+          "valid_until": {"type": "string", "format": "date-time"},
+          "signer": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["decision_id", "schedule", "action", "standard_version", "evidence", "signer", "decided_at"],
+        "properties": {
+          "decision_id": {"type": "string", "minLength": 1},
+          "schedule": {"type": "string", "minLength": 1},
+          "action": {"type": "string", "enum": ["开赛", "延迟", "取消"]},
+          "standard_version": {"type": "string", "minLength": 1},
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "signer": {"type": "string", "minLength": 1},
+          "decided_at": {"type": "string", "format": "date-time"}
+        },
+        "additionalProperties": false
       }
     }
   },
